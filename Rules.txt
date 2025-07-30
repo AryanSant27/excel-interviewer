@@ -1,0 +1,2 @@
+1. No long command execution where you try to start the server and just keep running it and cannot evaluate anything
+2. Whenever there is a package or library that needs to be installed, you come to me and tell me directly.. Do not try to install it on your own.

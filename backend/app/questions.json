@@ -1,0 +1,99 @@
+[
+  {
+    "id": 1,
+    "question": "What is the difference between a function and a formula in Excel?",
+    "difficulty": "easy",
+    "reference_answer": "A formula is an expression that you create to calculate a value, which can include cell references, operators, and constants. A function is a pre-defined formula in Excel that performs a specific calculation, like SUM or VLOOKUP.",
+    "follow_ups": [
+      {
+        "question": "Can you give an example of a situation where you would use a formula without a function?",
+        "trigger_score_threshold": 7,
+        "difficulty": "easy"
+      }
+    ]
+  },
+  {
+    "id": 2,
+    "question": "How do you freeze panes in an Excel worksheet and why is it useful?",
+    "difficulty": "easy",
+    "reference_answer": "You can freeze panes from the 'View' tab. It's useful for keeping header rows or columns visible while scrolling through a large dataset, making it easier to understand the data."
+  },
+  {
+    "id": 3,
+    "question": "Explain the purpose of the VLOOKUP function and its main limitations.",
+    "difficulty": "medium",
+    "reference_answer": "VLOOKUP is used to search for a value in the first column of a table and return a corresponding value from another column. Its main limitations are that it can only search in the leftmost column and can be slow on large datasets."
+  },
+  {
+    "id": 4,
+    "question": "What is a PivotTable and what are its primary uses?",
+    "difficulty": "medium",
+    "reference_answer": "A PivotTable is a tool for summarizing and reorganizing data from a table or spreadsheet. It's used to analyze data, identify trends, and create reports without changing the source data."
+  },
+  {
+    "id": 5,
+    "question": "What is conditional formatting in Excel?",
+    "difficulty": "easy",
+    "reference_answer": "Conditional formatting allows you to apply formatting (like colors, icons, or data bars) to cells based on specific criteria or values. It helps in visualizing data and highlighting important information."
+  },
+  {
+    "id": 6,
+    "question": "Explain the difference between absolute and relative cell references.",
+    "difficulty": "medium",
+    "reference_answer": "A relative reference (e.g., A1) changes when a formula is copied to another cell. An absolute reference (e.g., $A$1) remains constant no matter where the formula is copied. You can also have mixed references (e.g., $A1 or A$1)."
+  },
+  {
+    "id": 7,
+    "question": "What is the IFERROR function used for?",
+    "difficulty": "medium",
+    "reference_answer": "The IFERROR function is used to trap and handle errors in a formula. It checks if a formula evaluates to an error and returns a specified value if it does; otherwise, it returns the result of the formula."
+  },
+  {
+    "id": 8,
+    "question": "How would you combine the text from two cells into one?",
+    "difficulty": "easy",
+    "reference_answer": "You can use the CONCATENATE function or the ampersand (&) operator. For example, =CONCATENATE(A1, B1) or =A1 & B1."
+  },
+  {
+    "id": 9,
+    "question": "What is the 'Text to Columns' feature used for?",
+    "difficulty": "medium",
+    "reference_answer": "Text to Columns is used to split the content of a single cell into multiple columns. For example, splitting a full name in one cell into separate first name and last name columns."
+  },
+  {
+    "id": 10,
+    "question": "Describe a scenario where you would use the INDEX and MATCH functions together.",
+    "difficulty": "hard",
+    "reference_answer": "INDEX and MATCH are often used together as a more flexible alternative to VLOOKUP. For example, you can use it to look up a value in any column and return a corresponding value from any other column, which VLOOKUP cannot do. It's also more efficient on large datasets."
+  },
+  {
+    "id": 11,
+    "question": "What is a circular reference in Excel and how do you identify it?",
+    "difficulty": "hard",
+    "reference_answer": "A circular reference occurs when a formula refers back to its own cell, either directly or indirectly. Excel will usually display a warning message when one is created. You can find them using the Error Checking tool under the 'Formulas' tab."
+  },
+  {
+    "id": 12,
+    "question": "How can you create a dropdown list in a cell?",
+    "difficulty": "medium",
+    "reference_answer": "You can create a dropdown list using the Data Validation feature. Go to the 'Data' tab, select 'Data Validation', and in the 'Allow' dropdown, choose 'List'. You can then specify the source for the list items."
+  },
+  {
+    "id": 13,
+    "question": "What is the Goal Seek feature and how is it used?",
+    "difficulty": "hard",
+    "reference_answer": "Goal Seek is a what-if analysis tool that allows you to find the input value needed to achieve a specific goal or result. For example, if you know the desired profit, you can use Goal Seek to determine the number of units you need to sell to achieve it."
+  },
+  {
+    "id": 14,
+    "question": "Explain the use of the SUMIF and COUNTIF functions.",
+    "difficulty": "medium",
+    "reference_answer": "SUMIF and COUNTIF are used for conditional summing and counting. SUMIF sums values in a range that meet a specific criteria, while COUNTIF counts the number of cells in a range that meet a given criteria. They are useful for creating summary reports from raw data."
+  },
+  {
+    "id": 15,
+    "question": "What is the difference between the 'Delete' and 'Clear Contents' actions on a cell?",
+    "difficulty": "easy",
+    "reference_answer": "Pressing the 'Delete' key or using the 'Clear Contents' option removes the data from the cell but leaves the formatting intact. Using the 'Delete' option from the 'Home' tab's 'Cells' group (or right-click delete) removes the entire cell, shifting surrounding cells to fill the space."
+  }
+]

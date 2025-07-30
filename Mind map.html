@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Interviewer Mind Map</title>
+    <style>
+        /* --- General Styles --- */
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background-color: #f0f2f5;
+            color: #333;
+            margin: 0;
+        }
+
+        .main-container {
+            display: flex;
+            align-items: flex-start;
+            padding: 40px;
+            gap: 40px;
+        }
+
+        /* --- Mind Map Container --- */
+        .mindmap-container {
+            flex-grow: 1;
+            text-align: center;
+        }
+
+        .mindmap {
+            display: inline-block;
+            text-align: left;
+            position: relative;
+        }
+
+        /* --- List & Item Reset --- */
+        .mindmap ul {
+            padding-left: 60px;
+            list-style-type: none;
+            position: relative;
+            transition: all 0.3s ease-in-out;
+        }
+
+        .mindmap li {
+            margin: 20px 0;
+            position: relative;
+        }
+
+        /* --- Connecting Lines --- */
+        .mindmap li::before, .mindmap li::after {
+            content: '';
+            position: absolute;
+            left: -40px;
+            background-color: #c8c8c8;
+        }
+
+        .mindmap li::before {
+            border-top: 2px solid #c8c8c8;
+            top: 20px;
+            width: 40px;
+            height: 0;
+        }
+
+        .mindmap li::after {
+            border-left: 2px solid #c8c8c8;
+            height: 100%;
+            width: 0;
+            top: -15px;
+        }
+
+        .mindmap > li::before, .mindmap > li::after { display: none; }
+        .mindmap li:last-child::after { height: 35px; }
+
+        /* --- Node Styling --- */
+        .mindmap li span {
+            display: inline-flex;
+            align-items: center;
+            min-height: 40px;
+            padding: 8px 12px 8px 18px;
+            border-radius: 20px;
+            border: 2px solid;
+            background-color: #ffffff;
+            color: #333;
+            position: relative;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+            font-weight: 500;
+        }
+        
+        .mindmap li.leaf > span { cursor: default; }
+        .mindmap li span:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        }
+
+        /* --- Node Color Schemes --- */
+        .mindmap > li > span { background-color: #4A90E2; color: white; border-color: #357ABD; font-size: 18px; font-weight: 600; }
+        .mindmap .level-1 > span { background-color: #F5A623; border-color: #D9901A; color: white; }
+        .mindmap .level-2 > span { background-color: #50E3C2; border-color: #42C8A8; }
+        .mindmap .level-3 > span { background-color: #BD10E0; color: white; border-color: #A30DBF; }
+
+        /* --- Collapse/Expand Logic --- */
+        .mindmap li.collapsed > ul { display: none; }
+        .mindmap li > span::before {
+            content: '−';
+            display: flex; justify-content: center; align-items: center;
+            width: 18px; height: 18px; border-radius: 50%;
+            background-color: rgba(255,255,255,0.3);
+            color: #333; font-weight: bold; margin-right: 10px;
+            font-size: 16px; line-height: 18px;
+        }
+        .mindmap > li > span::before,
+        .mindmap .level-1 > span::before,
+        .mindmap .level-3 > span::before { background-color: rgba(0,0,0,0.15); color: white; }
+        .mindmap li.collapsed > span::before { content: '+'; }
+        .mindmap li.leaf > span::before { display: none; }
+        .mindmap li.leaf > span { padding-left: 18px; }
+
+        /* --- Info Icon --- */
+        .info-icon {
+            font-style: normal; font-weight: bold;
+            display: inline-flex; justify-content: center; align-items: center;
+            width: 18px; height: 18px; border-radius: 50%;
+            background: rgba(0,0,0,0.15); color: white;
+            margin-left: 10px; cursor: pointer; font-size: 12px;
+        }
+        .mindmap .level-2 .info-icon { background: rgba(255,255,255,0.4); color: #333; }
+        
+        /* --- Explanation Side Panel --- */
+        .explanation-panel {
+            width: 320px;
+            flex-shrink: 0;
+            background-color: #ffffff;
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 40px;
+            display: none; /* Hidden by default */
+        }
+        .explanation-panel.visible {
+            display: block;
+        }
+        .explanation-panel h3 {
+            margin-top: 0;
+            color: #4A90E2;
+            border-bottom: 2px solid #f0f2f5;
+            padding-bottom: 10px;
+        }
+        .explanation-panel p {
+            font-size: 15px;
+            line-height: 1.6;
+            color: #555;
+        }
+    </style>
+</head>
+<body>
+
+<div class="main-container">
+    <div class="mindmap-container">
+        <ul class="mindmap">
+            <li data-level="0" data-title="AI Interviewer" data-explanation="This document outlines the end-to-end approach for the AI-powered Excel mock interviewer system, detailing the interview flow, component interactions, and integration of key features.">
+                <span>AI-Powered Excel Interviewer <i class="info-icon">i</i></span>
+                <ul>
+                    <li class="level-1" data-title="System Architecture" data-explanation="The core components of the system.">
+                        <span>System Architecture <i class="info-icon">i</i></span>
+                        <ul>
+                            <li class="leaf level-2" data-title="Frontend (React)" data-explanation="Provides the interactive chat-based user interface."><span>Frontend (React)<i class="info-icon">i</i></span></li>
+                            <li class="leaf level-2" data-title="Backend (Flask)" data-explanation="Manages interview state, handles API requests, orchestrates LLM interactions, and manages the question bank."><span>Backend (Flask)<i class="info-icon">i</i></span></li>
+                            <li class="leaf level-2" data-title="Question Bank" data-explanation="Stores pre-defined Excel interview questions, their difficulty levels, and reference answers."><span>Question Bank (`questions.json`)<i class="info-icon">i</i></span></li>
+                            <li class="leaf level-2" data-title="LLM Integration" data-explanation="Utilizes a Large Language Model (LLM) for answer evaluation, feedback generation, and future question generation."><span>LLM Integration<i class="info-icon">i</i></span></li>
+                        </ul>
+                    </li>
+                    <li class="level-1 collapsed" data-title="Interview Flow" data-explanation="The step-by-step process of a mock interview from start to finish.">
+                        <span>Interview Flow <i class="info-icon">i</i></span>
+                        <ul>
+                            <li class="leaf level-2" data-title="Interview Start" data-explanation="User starts the interview, backend initializes the session and asks the first question."><span>1. Interview Start<i class="info-icon">i</i></span></li>
+                            <li class="leaf level-2" data-title="Question Asking" data-explanation="Backend sends a question to the frontend for the user to see."><span>2. Question Asking<i class="info-icon">i</i></span></li>
+                            <li class="leaf level-2" data-title="Answer Provision" data-explanation="The candidate provides their answer through the UI, which is sent to the backend."><span>3. Answer Provision<i class="info-icon">i</i></span></li>
+                            <li class="leaf level-2" data-title="Answer Evaluation" data-explanation="The backend uses an LLM to evaluate the candidate's answer against a reference answer and provides feedback."><span>4. Answer Evaluation<i class="info-icon">i</i></span></li>
+                            <li class="leaf level-2" data-title="Conclusion & Report" data-explanation="After all questions are answered, the system generates a comprehensive final report on the candidate's performance."><span>5. Conclusion & Report<i class="info-icon">i</i></span></li>
+                        </ul>
+                    </li>
+                    <li class="level-1 collapsed" data-title="Other Features" data-explanation="Additional features that enhance the system's capabilities, including future plans.">
+                        <span>Other Features & Integration <i class="info-icon">i</i></span>
+                        <ul>
+                            <li class="level-2 collapsed" data-title="Question Bank Expansion" data-explanation="Methods to grow the question set, including manual entry, on-demand generation, and creating questions from past interviews.">
+                                <span>Question Bank Expansion <i class="info-icon">i</i></span>
+                            </li>
+                            <li class="level-2 collapsed" data-title="RAG-Based Selection" data-explanation="A future feature to make question selection more intelligent and adaptive using semantic search (RAG) on a large question database.">
+                                <span>Future RAG-Based Selection <i class="info-icon">i</i></span>
+                            </li>
+                             <li class="level-2 collapsed" data-title="Speech Integration" data-explanation="Future plan to incorporate voice interaction, allowing the interviewer to speak questions (TTS) and the candidate to answer verbally (STT).">
+                                <span>Advanced Speech Integration <i class="info-icon">i</i></span>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="level-1" data-title="Key Principles" data-explanation="The core design philosophies that guide the system's development.">
+                        <span>Key Principles <i class="info-icon">i</i></span>
+                        <ul>
+                            <li class="leaf level-2" data-title="Modularity" data-explanation="Components are designed to be independent and easily swappable (e.g., changing LLM providers)."><span>Modularity<i class="info-icon">i</i></span></li>
+                            <li class="leaf level-2" data-title="State Management" data-explanation="A central class (`InterviewSession`) tracks the interview's progress and history."><span>State Management<i class="info-icon">i</i></span></li>
+                            <li class="leaf level-2" data-title="LLM as Engine" data-explanation="Leveraging a Large Language Model for complex tasks like evaluation and content generation."><span>LLM as Reasoning Engine<i class="info-icon">i</i></span></li>
+                            <li class="leaf level-2" data-title="Iterative Development" data-explanation="Building core functionality first, then layering on advanced features over time."><span>Iterative Development<i class="info-icon">i</i></span></li>
+                        </ul>
+                    </li>
+                </ul>
+            </li>
+        </ul>
+    </div>
+
+    <div id="explanation-panel" class="explanation-panel">
+        <h3 id="explanation-title">Explanation</h3>
+        <p id="explanation-content">Click the 'i' icon on any topic in the mind map to see its explanation here.</p>
+    </div>
+</div>
+
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const allListItems = document.querySelectorAll('.mindmap li');
+        const infoIcons = document.querySelectorAll('.info-icon');
+        const explanationPanel = document.getElementById('explanation-panel');
+        const explanationTitle = document.getElementById('explanation-title');
+        const explanationContent = document.getElementById('explanation-content');
+
+        // --- Logic for expanding/collapsing nodes ---
+        allListItems.forEach(item => {
+            const hasChildren = item.querySelector('ul');
+            if (!hasChildren) {
+                item.classList.add('leaf');
+            }
+
+            const span = item.querySelector(':scope > span');
+            if (span && hasChildren) {
+                span.addEventListener('click', function(event) {
+                    if (event.target.classList.contains('info-icon')) {
+                        return; // Don't toggle if the info icon itself was clicked
+                    }
+                    event.stopPropagation(); 
+                    item.classList.toggle('collapsed');
+                });
+            }
+        });
+
+        // --- Logic for showing explanation in side panel ---
+        infoIcons.forEach(icon => {
+            icon.addEventListener('click', function(event) {
+                event.stopPropagation(); // Prevent the node from toggling
+
+                const parentLi = this.closest('li');
+                const title = parentLi.dataset.title;
+                const explanation = parentLi.dataset.explanation;
+
+                if (title && explanation) {
+                    explanationTitle.textContent = title;
+                    explanationContent.textContent = explanation;
+                    explanationPanel.classList.add('visible');
+                }
+            });
+        });
+    });
+</script>
+
+</body>
+</html>

@@ -1,0 +1,9 @@
+{
+    "generated_questions": [
+        "Describe a scenario where using the SUMIF function would be more efficient than using the SUM function alone.",
+        "How can you use the `FIND` or `SEARCH` function to extract a specific part of text from a cell?",
+        "Explain the purpose of the `$` symbol when creating cell references in formulas (absolute vs. relative referencing).",
+        "How would you create a simple chart in Excel to visually represent data from a range of cells?",
+        "What are some common uses for the `AVERAGE`, `MAX`, and `MIN` functions?"
+    ]
+}

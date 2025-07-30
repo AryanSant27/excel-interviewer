@@ -1,0 +1,69 @@
+## Daily Progress - 26 July 2025
+
+*   **Backend:**
+    *   Defined 15 Excel interview questions with difficulty levels and reference answers in `backend/app/questions.json`.
+    *   Created `InterviewSession` class in `backend/app/models.py` to manage interview state and chat history.
+    *   Set up basic Flask routes (`/start`, `/questions`) and services to handle interview initiation and question retrieval.
+    *   Updated `run.py` to run the Flask application.
+
+*   **Frontend:**
+    *   Created `frontend/src/components/ChatWindow.js` for displaying messages.
+    *   Created `frontend/src/components/TextInput.js` for user input.
+    *   Integrated `ChatWindow` and `TextInput` into `frontend/src/App.js` to build the main chat interface.
+    *   Styled the chat interface in `frontend/src/App.css`, including fixing the scrolling issue.
+    *   Fixed parsing error in `frontend/src/App.js` related to string literals.
+
+*   **Documentation:**
+    *   Created `Approach.txt` detailing the system's architecture, interview flow, and feature integration, including future RAG database strategy.
+
+## Daily Progress - 27 July 2025
+
+*   **Frontend-Backend Connection & Core Flow:**
+    *   Implemented full communication between `frontend/src/App.js` and backend endpoints (`/start`, `/answer`).
+    *   Enabled CORS in `backend/app/__init__.py` by installing and configuring `Flask-CORS`.
+
+*   **LLM Integration (Placeholder):**
+    *   Integrated `python-dotenv` and `google-generativeai` libraries.
+    *   Configured loading of `GEMINI_API_KEY` from `.env` file.
+    *   Updated `evaluate_answer` in `backend/app/services.py` to include Gemini API call structure (with placeholder key) for individual answer evaluation.
+    *   Updated `generate_final_report` in `backend/app/services.py` to include Gemini API call structure (with placeholder key) for comprehensive interview report generation.
+
+*   **Cross-Questioning Feature (JSON-based):
+    *   Modified `questions.json` to include `follow_ups` array with `trigger_score_threshold` for main questions.
+    *   Enhanced `Interview` class in `backend/app/models.py` to manage `pending_follow_ups` and prioritize them in `get_next_question`.
+    *   Updated `submit_answer` in `backend/app/services.py` to check evaluation scores and add relevant follow-ups to the `pending_follow_ups` queue.
+
+*   **Dynamic Question Selection:**
+    *   Modified `fetch_questions` in `backend/app/questions.py` to return all questions of a given difficulty, delegating randomization.
+    *   Updated `Interview` class in `backend/app/models.py` to handle random selection of main questions from the available pool, ensuring no repetitions, and tracking `questions_asked_count`.
+    *   Updated `submit_answer` in `backend/app/services.py` to correctly use `interview.current_main_question_data` for evaluation and follow-up logic.
+
+*   **Bug Fixes & Enhancements:**
+    *   **Fixed Follow-up Evaluation Loop:** Refined logic in `backend/app/models.py` (`last_question_sent_data`) and `backend/app/services.py` (`submit_answer`) to correctly evaluate all answers (main and follow-up) and ensure new follow-ups are only triggered from main questions, preventing infinite loops.
+    *   **Disabled Frontend Input:** Implemented functionality in `frontend/src/App.js` to disable the `TextInput` component after the interview is complete and the final report is displayed.
+
+## Daily Progress - 27 July 2025 (Continued)
+
+*   **LLM Integration Refinement:**
+    *   Updated `backend/app/services.py` to use `gemini-1.5-flash` model instead of `gemini-pro`.
+    *   Modified prompts in `backend/app/services.py` for `evaluate_answer` and `generate_final_report` to explicitly instruct the LLM to return *only* JSON.
+    *   Implemented robust JSON extraction from markdown code blocks in `backend/app/services.py` to handle LLM responses wrapped in ````json...```` format.
+    *   Updated `frontend/src/App.js` to display the full JSON evaluation object for debugging.
+    *   Fixed the `'feedback'` error in `generate_final_report` by removing the reference to the non-existent `'feedback'` key in the evaluation object.
+
+*   **Dependency Management:**
+    *   Installed `flask-cors` to resolve `ModuleNotFoundError`.
+
+## Next Steps:
+
+*   Refine LLM prompts for more accurate and nuanced evaluations and reports.
+*   Develop microservice for on-demand question generation.
+*   Implement cross-question generation from transcripts.
+*   Further enhance frontend UI/UX.
+
+## Daily Progress - 29 July 2025
+
+*   **Transcript Generation:**
+    *   Implemented `save_transcript` function in `backend/app/services.py` to generate a `transcript.json` file at the end of each interview.
+    *   The transcript includes a detailed summary of each question, the user's answer, the reference answer, the score, and the final report.
+    *   Modified `backend/app/routes.py` to call the `save_transcript` function upon interview completion.

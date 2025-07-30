@@ -1,0 +1,84 @@
+# AI-Powered Excel Mock Interviewer — Project Overview
+
+## 🧭 Project Goal
+
+To build a fully functional AI-powered system that simulates an Excel skills mock interview for job candidates. The system must behave like a real interviewer — asking structured questions, evaluating responses intelligently, maintaining conversational state, and providing a detailed performance report.
+
+---
+
+## ✅ Core Features (Must-Have)
+
+1. **Structured Interview Flow**
+   - The agent must introduce itself, explain the process, ask multiple Excel-related questions in sequence, and conclude with a summary.
+   - Must feel like a real interview, not a questionnaire.
+
+2. **Intelligent Answer Evaluation**
+   - This is the core component.
+   - The system must evaluate free-form text responses from candidates.
+   - It should assess correctness, depth, understanding of Excel concepts (e.g., formulas, VLOOKUP, pivot tables).
+   - Should use LLMs for semantic analysis, not just keyword matching.
+
+3. **Agentic Behavior and State Management**
+   - The agent must behave coherently across turns.
+   - Should remember previous answers, current question number, and adjust follow-up behavior.
+   - Use memory/session management logic.
+
+4. **Constructive Feedback Report**
+   - After the interview, generate a feedback report summarizing:
+     - Score
+     - Strengths
+     - Weaknesses
+     - Suggestions for improvement
+   - Should be LLM-generated and cleanly formatted.
+
+5. **Cold Start Strategy**
+   - Since no interview dataset is provided, design an approach to:
+     - Create an initial dataset (manually write 10–20 questions)
+     - Include expected answers and common mistakes
+     - Use few-shot examples or prompt engineering to improve LLM quality
+     - Plan future improvements via logging and feedback loops
+
+---
+
+## 🧪 Optional Features (Nice-to-Haves)
+
+- Adaptive questioning (e.g., harder questions based on good performance)
+- PDF or email export of performance report
+- Admin dashboard for reviewing past interviews
+- Voice input (via Whisper or browser mic) — *not needed for MVP*
+- LLM fine-tuning pipeline in future
+
+---
+
+## ⚙️ Implementation Strategy
+
+### 🖥️ Frontend
+- **Goal**: Interactive interview interface with chat-style UX
+- **Options**:
+  - Streamlit → best for PoC and faster iterations
+  - React + Tailwind CSS → production-ready interface with full control
+
+### 🧠 Backend
+- **FastAPI** or **Flask**
+  - Handles chat flow, manages sessions, calls LLM, stores logs
+  - Endpoints:
+    - `/start` → begins session
+    - `/answer` → accepts user reply and returns next question + eval
+    - `/report` → returns final summary
+
+### 🧠 LLM Integration
+- Use GPT-4 or Claude via API
+- Create structured prompt templates:
+  - For evaluating answers
+  - For summarizing feedback
+  - For generating follow-up questions (optional)
+
+#### 🔍 Example Prompt (Answer Evaluation)
+```plaintext
+You are an Excel expert evaluating a candidate's response.
+
+Question: How do you use VLOOKUP to pull data from another sheet?
+Candidate Answer: "I would write =VLOOKUP(A2, Sheet2!A:B, 2, FALSE)"
+
+Evaluate on a scale of 1 to 10. Justify your score. Return JSON like:
+{ "score": 9, "reason": "...", "mistakes": [] }

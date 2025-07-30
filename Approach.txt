@@ -1,0 +1,163 @@
+# System Approach: AI-Powered Excel Mock Interviewer
+
+This document outlines the end-to-end approach for the AI-powered Excel mock interviewer system, detailing the interview flow, component interactions, and integration of key features.
+
+## 1. System Architecture Overview
+
+*   **Frontend (React):** Provides the interactive chat-based user interface.
+*   **Backend (Flask):** Manages interview state, handles API requests, orchestrates LLM interactions, and manages the question bank.
+*   **Question Bank (`questions.json`):** Stores pre-defined Excel interview questions, their difficulty levels, and reference answers.
+*   **LLM Integration:** Utilizes a Large Language Model (LLM) for answer evaluation, feedback generation, and future question generation.
+
+## 2. Interview Flow - Step-by-Step
+
+### 2.1. Interview Start
+
+1.  **User Action:** The candidate accesses the frontend application.
+2.  **Frontend Display:** The frontend (`App.js`) displays an initial introductory message from the AI interviewer (e.g., "Hello, I'm your AI Excel interviewer. What's your name?").
+3.  **User Input:** The candidate types their name into the `TextInput` component and sends it.
+4.  **Frontend to Backend:** The frontend sends the candidate's name (and a chosen difficulty, if applicable) to the backend's `/start` endpoint.
+5.  **Backend Processing (`/start` endpoint):
+    *   Initializes a new `InterviewSession` instance (stored in memory, associated with a unique `interview_id`).
+    *   Loads questions from `questions.json` based on the selected difficulty.
+    *   Records the initial interaction (system intro, user name) in the `InterviewSession`'s `chat_history`.
+    *   Retrieves the first question from the loaded question set.
+    *   Adds the first question to `chat_history`.
+    *   Returns the `interview_id` and the first question to the frontend.
+
+### 2.2. Question Asking
+
+1.  **Backend to Frontend:** The backend sends the next question to the frontend.
+2.  **Frontend Display:** The `ChatWindow` component displays the question to the candidate.
+    *   *(Future Speech Integration):* If an audio URL for the question is provided by the backend (from a TTS service), the frontend will play the audio while displaying the text.
+
+### 2.3. Answer Provision
+
+1.  **User Action:** The candidate types their answer into the `TextInput` component.
+2.  **Frontend to Backend:** The frontend sends the candidate's answer, along with the `interview_id`, to a new backend endpoint (e.g., `/answer`).
+3.  **Frontend Display:** The frontend immediately adds the candidate's answer to its local `chat_history` and displays it in the `ChatWindow`.
+
+### 2.4. Answer Evaluation
+
+1.  **Backend Processing (`/answer` endpoint):
+    *   Retrieves the `InterviewSession` using the `interview_id`.
+    *   Adds the candidate's answer to the `InterviewSession`'s `chat_history`.
+    *   Identifies the current question and its corresponding `reference_answer` from the `questions.json` data.
+    *   **LLM Prompt Construction:** Constructs a detailed prompt for the LLM, including:
+        *   The role of the LLM (e.g., "Excel expert evaluator").
+        *   The specific question asked.
+        *   The candidate's provided answer.
+        *   The `reference_answer` from `questions.json`.
+        *   Clear instructions for evaluation (e.g., score on a scale, identify strengths/weaknesses, provide justification).
+    *   **LLM Call (Placeholder):** Makes an API call to the chosen LLM (e.g., GPT-4, Claude).
+    *   **LLM Response Parsing:** Parses the LLM's structured response (e.g., JSON containing score, reason, feedback).
+    *   **Session Update:** Updates the `InterviewSession` with the evaluation results for that specific question.
+    *   **Next Action Determination:**
+        *   If there are more questions in the sequence, retrieves the next question.
+        *   If all questions have been asked, triggers the final report generation phase.
+    *   **Backend to Frontend:** Sends the next question (or a signal for interview completion) back to the frontend.
+
+### 2.5. Interview Conclusion & Report Generation
+
+1.  **Backend Trigger:** Once all questions are answered, the backend initiates the report generation.
+2.  **LLM Prompt Construction:** Constructs a prompt for the LLM to generate a comprehensive final report, including:
+    *   The role of the LLM (e.g., "Interview Feedback Generator").
+    *   The entire `chat_history` of the interview.
+    *   All individual question evaluations and scores.
+    *   Instructions for generating an overall score, summary of strengths, weaknesses, and actionable suggestions for improvement.
+3.  **LLM Call (Placeholder):** Makes an API call to the LLM.
+4.  **LLM Response Parsing:** Parses the LLM's structured report.
+5.  **Backend to Frontend:** Sends the final report to the frontend.
+6.  **Frontend Display:** The frontend displays the detailed performance report to the candidate.
+
+## 3. Other Features & Integration
+
+### 3.1. Question Bank Expansion (Addressing Cold Start)
+
+*   **Manual Curation:** Initial 15 questions are manually defined in `questions.json`.
+*   **Microservice for On-Demand Question Generation (`/generate_question` endpoint):
+    *   **Purpose:** Allows for programmatic generation of new questions.
+    *   **Flow:** A request (e.g., via an admin interface or CLI) is sent to `/generate_question` with parameters like topic or desired difficulty.
+    *   **LLM Interaction:** The backend prompts an LLM to generate a new Excel question, its difficulty, and a reference answer in the `questions.json` format.
+    *   **Storage:** The generated question is appended to `questions.json`.
+*   **Cross-Question Generation from Transcripts (Post-Interview):
+    *   **Purpose:** Dynamically expands the question bank with context-rich follow-up questions.
+    *   **Flow:** After an interview, the complete `chat_history` (transcript) is saved locally (e.g., in a `transcripts/` directory).
+    *   **LLM Interaction:** A separate backend process or endpoint can take these saved transcripts, prompt an LLM to analyze the candidate's responses, and generate 1-3 new, relevant cross-questions (with difficulty and reference answers) that could have been asked.
+    *   **Storage:** These newly generated questions are appended to `questions.json` after an optional human review phase.
+
+### 3.2. Future RAG-Based Question Selection
+
+*   **Purpose:** To enable more intelligent and adaptive question selection from a large question bank (e.g., 100+ questions).
+*   **Database Strategy (for 50-80+ questions):**
+    *   **Primary Question Bank Database:** Stores the structured question data (ID, question text, difficulty, reference answer, etc.). This is the source of truth.
+    *   **Embeddings Database (Vector Store):** Stores the vector embeddings of each question, enabling semantic search for RAG.
+    *   **Synchronization:** Whenever a new question is generated (e.g., via the `/generate_question` endpoint) or modified, both the Primary Question Bank Database and the Embeddings Database must be updated to maintain consistency.
+*   **Flow:** Instead of sequential or simple difficulty-based selection, the system would:
+    *   Embed the candidate's previous answers or the current interview context.
+    *   Use a Retrieval-Augmented Generation (RAG) approach to semantically search the Embeddings Database for the most relevant next question.
+    *   Retrieve the full question details from the Primary Question Bank Database based on the RAG results.
+    *   This ensures questions are tailored and avoids repetition.
+
+### 3.3. Advanced Speech Integration (Future)
+
+*   **Text-to-Speech (TTS) for Interviewer:**
+    *   **Backend:** When a question is retrieved, the text is sent to an external TTS API (e.g., Google Cloud TTS, AWS Polly, Eleven Labs).
+    *   **Backend Response:** The backend receives an audio file (or a URL to it) and sends this along with the question text to the frontend.
+    *   **Frontend:** Plays the audio file for the question.
+*   **Speech-to-Text (STT) for Candidate Answers:**
+    *   **Frontend:** Captures audio input from the user (e.g., via browser microphone).
+    *   **Frontend/Backend:** Sends the audio to an STT API (e.g., Whisper, Google Cloud Speech-to-Text).
+    *   **Backend:** Receives the transcribed text, which is then processed as a regular text answer.
+
+### 3.4. JSON-Based Cross-Questioning
+
+This feature enables dynamic follow-up questions based on candidate performance without real-time LLM generation, ensuring reliability and easy customization.
+
+1.  **Question Bank Structure (`questions.json`):**
+    *   Each main question can now include an optional `follow_ups` array.
+    *   Each object within `follow_ups` defines a cross-question with:
+        *   `question`: The text of the follow-up question.
+        *   `trigger_score_threshold`: The minimum score (from the main question's evaluation) required to trigger this follow-up.
+        *   `difficulty`: The difficulty level of the follow-up question.
+
+    ```json
+    {
+      "id": 1,
+      "question": "What is the difference between a function and a formula in Excel?",
+      "difficulty": "easy",
+      "reference_answer": "...",
+      "follow_ups": [
+        {
+          "question": "Can you give an example of a situation where you would use a formula without a function?",
+          "trigger_score_threshold": 7,
+          "difficulty": "easy"
+        }
+      ]
+    }
+    ```
+
+2.  **Backend Logic (`backend/app/models.py` & `backend/app/services.py`):**
+    *   **`Interview` Model:** A `pending_follow_ups` list is added to the `Interview` session to store triggered follow-up questions. The `get_next_question` method is updated to prioritize questions from this list before moving to the next main question.
+    *   **`submit_answer` Service:** After the candidate's answer to a main question is evaluated (and a score is obtained, initially via a placeholder or later via LLM):
+        *   The system checks if the `current_question` has any `follow_ups` defined.
+        *   For each `follow_up`, it compares the candidate's score against the `trigger_score_threshold`.
+        *   If the score meets or exceeds the threshold, the `follow_up` question is added to the `interview.pending_follow_ups` list.
+
+3.  **Flow Integration:**
+    *   When the backend requests the "next question," it first checks `interview.pending_follow_ups`.
+    *   If there are any pending follow-ups, the first one is popped from the list and sent to the frontend.
+    *   Only when `pending_follow_ups` is empty does the system proceed to the next main question in the sequence.
+    *   This ensures that cross-questions are asked immediately after the relevant main question, creating a dynamic and adaptive interview experience.
+
+4.  **Benefits:**
+    *   **Reliability:** Eliminates the need for real-time LLM generation of follow-ups, reducing latency and potential for irrelevant questions.
+    *   **Control & Customization:** Allows for precise control over which follow-ups are asked and under what conditions, making the interview highly customizable.
+    *   **Maintainability:** The JSON structure is easy to read, modify, and extend, simplifying question bank management.
+
+## 4. Key Principles
+
+*   **Modularity:** Components and services are designed to be independent and swappable (e.g., input methods, LLM providers).
+*   **State Management:** The `InterviewSession` class centralizes the interview's progress and history.
+*   **LLM as Reasoning Engine:** The LLM is leveraged for complex tasks like evaluation and content generation, guided by structured prompts and reference data.
+*   **Iterative Development:** Core functionality is built first, with advanced features layered on top as the system matures and the question bank grows.

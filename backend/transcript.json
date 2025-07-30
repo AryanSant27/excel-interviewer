@@ -1,0 +1,53 @@
+{
+    "interview_summary": [
+        {
+            "question": "What is the difference between a function and a formula in Excel?",
+            "sub_question": "Can you give an example of a situation where you would use a formula without a function?",
+            "user_answer": "n Excel, formulas are user-defined expressions that perform calculations, while functions are pre-defined, built-in formulas that perform specific tasks. Formulas combine operators, cell references, and constants, while functions have a defined syntax and perform calculations based on their arguments. ",
+            "reference_answer": "A formula is an expression that you create to calculate a value, which can include cell references, operators, and constants. A function is a pre-defined formula in Excel that performs a specific calculation, like SUM or VLOOKUP.",
+            "score": 8
+        },
+        {
+            "question": "Can you give an example of a situation where you would use a formula without a function?",
+            "sub_question": "NA",
+            "user_answer": "I would use a formula without a built-in function in a spreadsheet program like Excel for basic arithmetic operations where you want to directly input values or cell references and combine them with operators to achieve a result, essentially using the spreadsheet like a calculator.",
+            "reference_answer": "",
+            "score": 8
+        },
+        {
+            "question": "How do you freeze panes in an Excel worksheet and why is it useful?",
+            "sub_question": "NA",
+            "user_answer": "To freeze panes in Excel, go to the View tab, then click Freeze Panes within the \"Window\" group, and select the desired option: Freeze Top Row, Freeze First Column",
+            "reference_answer": "You can freeze panes from the 'View' tab. It's useful for keeping header rows or columns visible while scrolling through a large dataset, making it easier to understand the data.",
+            "score": 8
+        },
+        {
+            "question": "What is the difference between the 'Delete' and 'Clear Contents' actions on a cell?",
+            "sub_question": "NA",
+            "user_answer": "In Excel, \"Delete\" and \"Clear Contents\" have distinct functionalities: Clear Contents removes only the data from cells while leaving formatting and cell structure intact, whereas \"Delete\" (when applied to cells) removes the entire cell(s) and shifts adjacent cells to fill the gap, and when applied to rows or columns, it removes the entire row or column. ",
+            "reference_answer": "Pressing the 'Delete' key or using the 'Clear Contents' option removes the data from the cell but leaves the formatting intact. Using the 'Delete' option from the 'Home' tab's 'Cells' group (or right-click delete) removes the entire cell, shifting surrounding cells to fill the space.",
+            "score": 8
+        },
+        {
+            "question": "What is conditional formatting in Excel?",
+            "sub_question": "NA",
+            "user_answer": "Conditional formatting is a feature in spreadsheet programs that allows you to automatically apply formatting (like colors, icons, or data bars) to cells based on their values. ",
+            "reference_answer": "Conditional formatting allows you to apply formatting (like colors, icons, or data bars) to cells based on specific criteria or values. It helps in visualizing data and highlighting important information.",
+            "score": 8
+        },
+        {
+            "question": "How would you combine the text from two cells into one?",
+            "sub_question": "NA",
+            "user_answer": "Type = and select the first cell you want to combine. Type & and use quotation marks with a space enclosed. Type & again, then select the next cell you want to combine, and press Enter. An example formula might be =A2&\" \"&B2.",
+            "reference_answer": "You can use the CONCATENATE function or the ampersand (&) operator. For example, =CONCATENATE(A1, B1) or =A1 & B1.",
+            "score": 8
+        }
+    ],
+    "final_report": {
+        "final_score": "N/A",
+        "summary": "Error generating report. Using placeholder report.",
+        "strengths": [],
+        "weaknesses": [],
+        "suggestions": []
+    }
+}

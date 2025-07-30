@@ -1,0 +1,73 @@
+# Project Goals: AI-Powered Excel Mock Interviewer
+
+This document outlines the current implementation goals for the project.
+
+## 1. Core Interview Flow
+
+*   **System Introduction & Candidate Onboarding:**
+    *   Frontend: Display initial AI interviewer introduction.
+    *   Frontend: Capture candidate's name.
+    *   Backend: `/start` endpoint to initialize `InterviewSession` with candidate name and selected difficulty.
+    *   Backend: Store `InterviewSession` state (including chat history) in memory.
+    *   Backend: Send first question to frontend after introduction.
+
+*   **Question Delivery:**
+    *   Frontend: Display questions from the backend in the chat window.
+    *   Backend: Retrieve next question from `questions.json` based on interview state.
+
+*   **Answer Submission:**
+    *   Frontend: Allow candidate to input and send answers via `TextInput`.
+    *   Backend: `/answer` endpoint to receive candidate's answer.
+
+*   **Answer Evaluation (LLM Integration):**
+    *   Backend: Construct LLM prompt with question, candidate answer, and reference answer.
+    *   Backend: Call LLM API for evaluation (score, feedback, strengths/weaknesses).
+    *   Backend: Update `InterviewSession` with evaluation results.
+
+*   **Interview Conclusion & Report Generation:**
+    *   Backend: Detect end of interview (all questions asked).
+    *   Backend: Construct LLM prompt with full chat history and evaluation results for final report.
+    *   Backend: Call LLM API to generate comprehensive performance report.
+    *   Backend: Send final report to frontend.
+    *   Frontend: Display the generated performance report.
+
+*   **Interview Transcript:**
+    *   Backend: Generate and save a `transcript.json` file at the end of each interview. - **DONE**
+    *   The transcript should contain a list of all questions, sub-questions (or "NA"), user answers, reference answers, and scores. - **DONE**
+    *   The transcript should also include the final performance report. - **DONE**
+
+## 2. Question Bank Management
+
+*   **Initial Question Bank:**
+    *   `questions.json` with 15+ questions (difficulty, reference answers) - **DONE**
+
+*   **Microservice for On-Demand Question Generation:**
+    *   Backend: Implement `/generate_question` endpoint.
+    *   Backend: LLM interaction to generate new questions (text, difficulty, reference answer).
+    *   Backend: Append newly generated questions to `questions.json`.
+
+*   **Cross-Question Generation from Transcripts:**
+    *   Backend: Save full interview transcripts locally after each interview.
+    *   Backend: Implement a process/endpoint to analyze transcripts with LLM to generate cross-questions.
+    *   Backend: Append generated cross-questions to `questions.json` (after optional human review).
+
+## 3. Frontend Enhancements
+
+*   **Chat Interface:**
+    *   `ChatWindow` and `TextInput` components - **DONE**
+    *   Basic styling and scrolling - **DONE**
+
+*   **Backend Connection:**
+    *   Implement API calls from frontend to backend (`/start`, `/answer`, etc.).
+    *   Manage frontend state based on backend responses (displaying questions, feedback).
+
+## 4. Future Considerations (Beyond Current Scope, but Planned)
+
+*   **Advanced Speech Integration:**
+    *   Text-to-Speech (TTS) for interviewer questions.
+    *   Speech-to-Text (STT) for candidate answers.
+
+*   **RAG-Based Question Selection:**
+    *   Transition to a primary question bank database and an embeddings database.
+    *   Implement RAG logic for dynamic question retrieval based on interview context.
+    *   Ensure database synchronization for new/updated questions.
