@@ -296,18 +296,11 @@ body {
   display: flex;
   gap: 0.75rem;
   padding: 1.5rem;
-  background: rgba(255, 255, 255, 0.7);
+  background: var(--background-primary);
   border-radius: var(--border-radius-lg);
   box-shadow: var(--shadow-lg);
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  backdrop-filter: blur(20px) saturate(180%);
-  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  border: 1px solid var(--border-color);
   animation: slideUp 0.6s ease-out 0.6s both;
-}
-
-[data-theme="dark"] .text-input-form {
-  background: rgba(31, 41, 55, 0.7);
-  border: 1px solid rgba(55, 65, 81, 0.3);
 }
 
 @keyframes slideUp {
