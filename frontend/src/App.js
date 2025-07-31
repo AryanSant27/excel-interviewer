@@ -52,7 +52,7 @@ function App() {
       }
     } else if (interviewId && !interviewFinished) {
       try {
-        const response = await fetch('https://excel-interviewer.onrender.com/', {
+        const response = await fetch('https://excel-interviewer.onrender.com/answer', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
@@ -91,7 +91,7 @@ function App() {
 
   const handleDownloadTranscript = async () => {
     try {
-      const response = await fetch('https://excel-interviewer.onrender.com/');
+      const response = await fetch('https://excel-interviewer.onrender.com/download-transcript');
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);
       }
