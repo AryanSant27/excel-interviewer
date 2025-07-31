@@ -55,6 +55,40 @@ body {
   flex-direction: column;
   background: linear-gradient(135deg, var(--background-primary) 0%, var(--background-secondary) 100%);
   transition: var(--transition);
+  position: relative;
+  overflow: hidden;
+}
+
+.app::before {
+  content: '';
+  position: fixed;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: radial-gradient(circle, rgba(99, 102, 241, 0.03) 0%, transparent 50%);
+  animation: floatingBackground 20s ease-in-out infinite;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.app::after {
+  content: '';
+  position: fixed;
+  top: 20%;
+  right: -20%;
+  width: 40%;
+  height: 40%;
+  background: radial-gradient(circle, rgba(139, 92, 246, 0.05) 0%, transparent 70%);
+  animation: floatingBackground 25s ease-in-out infinite reverse;
+  pointer-events: none;
+  z-index: 0;
+}
+
+@keyframes floatingBackground {
+  0%, 100% { transform: translateY(0px) rotate(0deg); }
+  33% { transform: translateY(-30px) rotate(120deg); }
+  66% { transform: translateY(30px) rotate(240deg); }
 }
 
 .app-header {
