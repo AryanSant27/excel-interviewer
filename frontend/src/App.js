@@ -132,11 +132,6 @@ function App() {
       </div>
       <main className="chat-container">
         <ChatWindow messages={messages} />
-        {interviewFinished && (
-          <button onClick={handleDownloadTranscript} className="download-button">
-            📥 Download Transcript
-          </button>
-        )}
         <TextInput onSendMessage={handleSendMessage} disabled={interviewFinished} />
       </main>
     </div>
