@@ -32,7 +32,7 @@ function App() {
       }
 
       try {
-        const response = await fetch('https://excel-interviewer.onrender.com/', {
+        const response = await fetch('https://excel-interviewer.onrender.com/start', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
