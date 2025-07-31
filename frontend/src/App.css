@@ -277,28 +277,7 @@ body {
   transform: none;
 }
 
-.download-button {
-  align-self: center;
-  background: var(--background-secondary);
-  color: var(--text-primary);
-  border: 1px solid var(--border-color);
-  border-radius: var(--border-radius);
-  padding: 0.75rem 1.5rem;
-  cursor: pointer;
-  font-size: 0.95rem;
-  font-weight: 500;
-  transition: var(--transition);
-  box-shadow: var(--shadow-sm);
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-}
 
-.download-button:hover {
-  background: var(--background-tertiary);
-  transform: translateY(-1px);
-  box-shadow: var(--shadow-md);
-}
 
 @media (max-width: 768px) {
   .app-header {
