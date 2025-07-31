@@ -114,13 +114,20 @@ function App() {
       <div className="app-header">
         <div className="header-content">
           <h1 className="app-title">Excel Mock Interviewer</h1>
-          <button
-            onClick={() => setDarkMode(!darkMode)}
-            className="theme-toggle"
-            aria-label="Toggle dark mode"
-          >
-            {darkMode ? '☀️' : '🌙'}
-          </button>
+          <div className="header-actions">
+            {interviewFinished && (
+              <button onClick={handleDownloadTranscript} className="download-transcript-button">
+                📄 Transcript
+              </button>
+            )}
+            <button
+              onClick={() => setDarkMode(!darkMode)}
+              className="theme-toggle"
+              aria-label="Toggle dark mode"
+            >
+              {darkMode ? '☀️' : '🌙'}
+            </button>
+          </div>
         </div>
       </div>
       <main className="chat-container">
