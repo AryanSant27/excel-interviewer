@@ -101,17 +101,11 @@ body {
   font-size: 1.5rem;
   font-weight: 700;
   color: var(--text-primary);
-  background: linear-gradient(135deg, var(--primary-color), var(--primary-hover), #8b5cf6);
-  background-size: 200% 200%;
+  background: linear-gradient(135deg, var(--primary-color), var(--primary-hover));
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
-  animation: gradientShift 4s ease-in-out infinite, fadeInUp 0.8s ease-out;
-}
-
-@keyframes gradientShift {
-  0%, 100% { background-position: 0% 50%; }
-  50% { background-position: 100% 50%; }
+  animation: fadeInUp 0.8s ease-out;
 }
 
 @keyframes fadeInUp {
