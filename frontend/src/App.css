@@ -74,6 +74,12 @@ body {
   align-items: center;
 }
 
+.header-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
 .app-title {
   margin: 0;
   font-size: 1.5rem;
