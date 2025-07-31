@@ -269,6 +269,9 @@ body {
   padding: 0 1rem;
   width: 100%;
   gap: 1rem;
+  position: relative;
+  z-index: 10;
+  animation: fadeInUp 0.8s ease-out 0.2s both;
 }
 
 .chat-window {
