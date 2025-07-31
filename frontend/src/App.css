@@ -111,6 +111,28 @@ body {
   box-shadow: var(--shadow-md);
 }
 
+.download-transcript-button {
+  background: linear-gradient(135deg, var(--primary-color), var(--primary-hover));
+  color: white;
+  border: none;
+  border-radius: var(--border-radius);
+  padding: 0.625rem 1rem;
+  cursor: pointer;
+  font-size: 0.875rem;
+  font-weight: 600;
+  transition: var(--transition);
+  box-shadow: var(--shadow-sm);
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  white-space: nowrap;
+}
+
+.download-transcript-button:hover {
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-md);
+}
+
 .chat-container {
   flex: 1;
   display: flex;
