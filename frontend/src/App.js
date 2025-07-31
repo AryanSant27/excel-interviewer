@@ -32,7 +32,7 @@ function App() {
       }
 
       try {
-        const response = await fetch('http://127.0.0.1:5000/start', {
+        const response = await fetch('https://excel-interviewer.onrender.com/', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
@@ -52,7 +52,7 @@ function App() {
       }
     } else if (interviewId && !interviewFinished) {
       try {
-        const response = await fetch('http://127.0.0.1:5000/answer', {
+        const response = await fetch('https://excel-interviewer.onrender.com/', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
@@ -91,7 +91,7 @@ function App() {
 
   const handleDownloadTranscript = async () => {
     try {
-      const response = await fetch('http://127.0.0.1:5000/download-transcript');
+      const response = await fetch('https://excel-interviewer.onrender.com/');
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);
       }
