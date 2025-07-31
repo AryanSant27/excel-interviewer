@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-const TextInput = ({ onSendMessage }) => {
+const TextInput = ({ onSendMessage, disabled }) => {
   const [message, setMessage] = useState('');
 
   const handleSubmit = (e) => {
@@ -17,10 +17,13 @@ const TextInput = ({ onSendMessage }) => {
         type="text"
         value={message}
         onChange={(e) => setMessage(e.target.value)}
-        placeholder="Type your answer here..."
+        placeholder={disabled ? "Interview completed" : "Type your answer here..."}
         className="text-input-field"
+        disabled={disabled}
       />
-      <button type="submit" className="send-button">Send</button>
+      <button type="submit" className="send-button" disabled={disabled}>
+        Send
+      </button>
     </form>
   );
 };

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import ChatWindow from './components/ChatWindow';
 import TextInput from './components/TextInput';
 import './App.css';
@@ -9,6 +9,15 @@ function App() {
   ]);
   const [interviewId, setInterviewId] = useState(null);
   const [interviewFinished, setInterviewFinished] = useState(false);
+  const [darkMode, setDarkMode] = useState(() => {
+    const saved = localStorage.getItem('darkMode');
+    return saved ? JSON.parse(saved) : false;
+  });
+
+  useEffect(() => {
+    localStorage.setItem('darkMode', JSON.stringify(darkMode));
+    document.documentElement.setAttribute('data-theme', darkMode ? 'dark' : 'light');
+  }, [darkMode]);
 
   const handleSendMessage = async (text) => {
     const newMessages = [...messages, { sender: 'user', text }];
@@ -101,17 +110,28 @@ function App() {
   };
 
   return (
-    <div className="App">
-      <header className="App-header">
-        <h1>Excel Mock Interviewer</h1>
-      </header>
+    <div className={`app ${darkMode ? 'dark' : 'light'}`}>
+      <div className="app-header">
+        <div className="header-content">
+          <h1 className="app-title">Excel Mock Interviewer</h1>
+          <div className="header-actions">
+            {interviewFinished && (
+              <button onClick={handleDownloadTranscript} className="download-transcript-button">
+                📄 Transcript
+              </button>
+            )}
+            <button
+              onClick={() => setDarkMode(!darkMode)}
+              className="theme-toggle"
+              aria-label="Toggle dark mode"
+            >
+              {darkMode ? '☀️' : '🌙'}
+            </button>
+          </div>
+        </div>
+      </div>
       <main className="chat-container">
         <ChatWindow messages={messages} />
-        {interviewFinished && (
-          <button onClick={handleDownloadTranscript} className="download-btn">
-            Download Transcript
-          </button>
-        )}
         <TextInput onSendMessage={handleSendMessage} disabled={interviewFinished} />
       </main>
     </div>
