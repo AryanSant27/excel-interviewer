@@ -46,6 +46,7 @@ body {
   background-color: var(--background-primary);
   color: var(--text-primary);
   transition: var(--transition);
+  overflow-x: hidden;
 }
 
 .app {
