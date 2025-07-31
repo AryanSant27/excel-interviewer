@@ -17,10 +17,13 @@ const TextInput = ({ onSendMessage, disabled }) => {
         type="text"
         value={message}
         onChange={(e) => setMessage(e.target.value)}
-        placeholder="Type your answer here..."
+        placeholder={disabled ? "Interview completed" : "Type your answer here..."}
         className="text-input-field"
+        disabled={disabled}
       />
-      <button type="submit" className="send-button">Send</button>
+      <button type="submit" className="send-button" disabled={disabled}>
+        Send
+      </button>
     </form>
   );
 };
