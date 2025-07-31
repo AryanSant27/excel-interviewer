@@ -252,14 +252,12 @@ body {
   word-wrap: break-word;
   font-size: 0.95rem;
   box-shadow: var(--shadow-sm);
-  position: relative;
   animation: messageSlideIn 0.5s cubic-bezier(0.4, 0, 0.2, 1);
   transition: var(--transition);
-  backdrop-filter: blur(10px);
 }
 
 .message:hover {
-  transform: translateY(-2px);
+  transform: translateY(-1px);
   box-shadow: var(--shadow-md);
 }
 
